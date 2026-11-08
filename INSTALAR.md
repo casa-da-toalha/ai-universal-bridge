@@ -1,8 +1,8 @@
-# Instalação rápida — AI Universal Bridge 1.2.1
+# Instalação rápida — AI Universal Bridge 1.2.2
 
 Para o aplicativo **Claude Desktop** no macOS:
 
-1. Baixe `AI-Universal-Bridge-1.2.1.mcpb` nos assets da Release GitHub.
+1. Baixe `AI-Universal-Bridge-1.2.2.mcpb` nos assets da Release GitHub.
 2. Abra **Claude Desktop → Settings → Extensions → Advanced settings → Install Extension…** e selecione o arquivo. Configure as opções exibidas.
 3. Selecione um workspace dedicado. Informe a chave OpenAI API se quiser usar as ferramentas GPT; essa chave é separada da assinatura ChatGPT.
 4. Deixe as três opções de escrita/ação desativadas no início: workspace, Codex e servidores MCP externos.

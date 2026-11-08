@@ -1,4 +1,4 @@
-# Verificação da versão 1.2.1
+# Verificação da versão 1.2.2
 
 ## O que foi inspecionado
 
@@ -9,7 +9,7 @@
 
 ## Correções nesta release
 
-- Unificadas as versões em 1.2.1 e os modelos padrão Claude em `claude-sonnet-4-6`.
+- Unificadas as versões em 1.2.2 e os modelos padrão Claude em `claude-sonnet-4-6`.
 - Definido `gpt-6-luna` como modelo padrão econômico; `gpt-6-astra` permanece como modelo avançado. O usuário pode escolher modelos habilitados para a sua chave via configuração.
 - O Codex subprocesso agora recebe o ambiente normal de execução sem variáveis cujos nomes indicam chave de API, token, segredo, senha ou credencial.
 - Atualizadas as instruções de instalação para o fluxo atual de extensões no Claude Desktop.

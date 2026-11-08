@@ -1,0 +1,291 @@
+{
+  "manifest_version": "0.3",
+  "name": "ai-universal-bridge",
+  "display_name": "AI Universal Bridge — Claude + GPT + Codex",
+  "version": "1.2.2",
+  "description": "Ponte MCP para Claude Desktop: delegar ao GPT, Codex App Server e Claude API, memória, arquivos e servidores MCP remotos.",
+  "long_description": "Integração modular para Claude Desktop e MCP remoto opcional. Inclui ferramentas de análise, pesquisa, Codex com threads e aprovações conservadoras, comparação de modelos, memória local, trabalho em arquivos restritos e auditoria de uso. Não acessa automaticamente a interface pessoal de ChatGPT/Claude. As APIs podem cobrar separadamente.",
+  "author": {
+    "name": "AI Universal Bridge contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Claude Desktop",
+    "MCP",
+    "OpenAI",
+    "Codex",
+    "Anthropic",
+    "multi-agent",
+    "memory"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.mjs",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.mjs"
+      ],
+      "env": {
+        "AI_BRIDGE_OPENAI_KEY": "${user_config.openai_key}",
+        "AI_BRIDGE_ANTHROPIC_KEY": "${user_config.anthropic_key}",
+        "AI_BRIDGE_GPT_MODEL": "${user_config.gpt_model}",
+        "AI_BRIDGE_DEEP_MODEL": "${user_config.deep_model}",
+        "AI_BRIDGE_CLAUDE_MODEL": "${user_config.claude_model}",
+        "AI_BRIDGE_WORKSPACE": "${user_config.workspace}",
+        "AI_BRIDGE_ALLOW_WRITES": "${user_config.allow_writes}",
+        "AI_BRIDGE_ALLOW_CODEX_WRITES": "${user_config.allow_codex_writes}",
+        "AI_BRIDGE_CACHE": "${user_config.cache}",
+        "AI_BRIDGE_CODEX_BIN": "${user_config.codex_binary}",
+        "AI_BRIDGE_MCP_REGISTRY": "${user_config.registry_path}",
+        "AI_BRIDGE_ALLOW_REMOTE_ACTIONS": "${user_config.allow_remote_actions}",
+        "AI_BRIDGE_DAILY_API_CALL_LIMIT": "${user_config.daily_api_limit}"
+      }
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "user_config": {
+    "openai_key": {
+      "type": "string",
+      "title": "Chave OpenAI API",
+      "description": "Para ferramentas GPT, pesquisa e Python. A assinatura do ChatGPT não substitui esta credencial.",
+      "required": false,
+      "sensitive": true
+    },
+    "anthropic_key": {
+      "type": "string",
+      "title": "Chave Anthropic API (opcional)",
+      "description": "Para comparar modelos e usar Claude via API; não necessário para conversar no Claude Desktop.",
+      "required": false,
+      "sensitive": true
+    },
+    "gpt_model": {
+      "type": "string",
+      "title": "Modelo padrão GPT",
+      "description": "Modelo disponível na sua API. Economize tokens com modelo mais leve.",
+      "default": "gpt-6-luna",
+      "required": false
+    },
+    "deep_model": {
+      "type": "string",
+      "title": "Modelo GPT profundo",
+      "description": "Usado em pesquisas e raciocínio complexo; exige acesso e pode custar mais.",
+      "default": "gpt-6-astra",
+      "required": false
+    },
+    "claude_model": {
+      "type": "string",
+      "title": "Modelo Anthropic API",
+      "description": "Modelo disponível na sua API Anthropic.",
+      "default": "claude-sonnet-4-6",
+      "required": false
+    },
+    "workspace": {
+      "type": "directory",
+      "title": "Pasta de trabalho autorizada",
+      "description": "A ponte só pode ler/escrever arquivos dentro desta pasta. Escolha uma pasta dedicada.",
+      "required": true,
+      "default": "${HOME}/AIUniversalBridgeWorkspace"
+    },
+    "allow_writes": {
+      "type": "boolean",
+      "title": "Permitir gravações em arquivos",
+      "description": "Desativado por padrão; cada gravação ainda exige confirmação.",
+      "default": false,
+      "required": false
+    },
+    "allow_codex_writes": {
+      "type": "boolean",
+      "title": "Permitir Codex alterar código",
+      "description": "Desativado por padrão; exige confirmação individual e sandbox workspaceWrite.",
+      "default": false,
+      "required": false
+    },
+    "cache": {
+      "type": "boolean",
+      "title": "Ativar cache de respostas",
+      "description": "Desativado por padrão para privacidade; cache local de 10 minutos somente quando solicitado.",
+      "default": false,
+      "required": false
+    },
+    "codex_binary": {
+      "type": "string",
+      "title": "Executável Codex App Server",
+      "description": "Padrão codex; se o Claude Desktop não achar o Codex, informe caminho absoluto.",
+      "default": "codex",
+      "required": false
+    },
+    "registry_path": {
+      "type": "string",
+      "title": "Arquivo de servidores MCP externos",
+      "description": "Opcional. Exemplo: /Users/usuario/.ai-universal-bridge/mcp-servers.json",
+      "required": false
+    },
+    "allow_remote_actions": {
+      "type": "boolean",
+      "title": "Permitir ações em outros servidores MCP",
+      "description": "DESATIVADO por padrão. Ative apenas com servidores de confiança e revisão das chamadas.",
+      "default": false,
+      "required": false
+    },
+    "daily_api_limit": {
+      "type": "number",
+      "title": "Limite diário de chamadas API (UTC)",
+      "description": "Proteção contra muitas chamadas API; não é um limite monetário.",
+      "default": 50,
+      "min": 1,
+      "max": 500
+    }
+  },
+  "tools": [
+    {
+      "name": "bridge_status",
+      "description": "Diagnóstico local, recursos habilitados e condições para delegar a APIs."
+    },
+    {
+      "name": "bridge_capabilities",
+      "description": "Lista limites, arquitetura e ferramentas que a ponte implementa."
+    },
+    {
+      "name": "bridge_api_models",
+      "description": "Listar modelos disponíveis nas credenciais OpenAI ou Anthropic, sem consumir tokens de geração."
+    },
+    {
+      "name": "bridge_check_updates",
+      "description": "Verificar últimas versões publicadas de Codex, MCPB e SDK TypeScript no GitHub (apenas consulta)."
+    },
+    {
+      "name": "bridge_ask_gpt",
+      "description": "PEÇA AO GPT DA API OPENAI QUE EXECUTE UMA TAREFA. Pode usar busca web e Python hospedado (cobranças adicionais podem ocorrer)."
+    },
+    {
+      "name": "bridge_ask_gpt_deep",
+      "description": "Raciocínio profundo com modelo de alta capacidade; sujeito a acesso e custo próprios da API."
+    },
+    {
+      "name": "bridge_research",
+      "description": "Pesquisa pela OpenAI Responses API com busca web ativada e citação pedida ao modelo."
+    },
+    {
+      "name": "bridge_code_interpreter",
+      "description": "Delegue cálculos, análise de dados e Python a container isolado da OpenAI (não acessa arquivos locais automaticamente)."
+    },
+    {
+      "name": "bridge_ask_claude_api",
+      "description": "Chame outra instância de Claude via API Anthropic; não controla a conversa aberta no aplicativo."
+    },
+    {
+      "name": "bridge_compare_agents",
+      "description": "Comparar respostas independentes de GPT e Claude API; duas consultas são cobradas quando ambas ativadas."
+    },
+    {
+      "name": "bridge_workflow",
+      "description": "Pipeline de 1 a 4 etapas encadeadas entre GPT e Claude API, com resumo automático de contexto."
+    },
+    {
+      "name": "bridge_codex_run",
+      "description": "CODEx APP SERVER: inicie ou retome thread; acompanha eventos e usa sandbox. Gravação exige habilitação e confirmação."
+    },
+    {
+      "name": "bridge_codex_models",
+      "description": "Consultar modelos realmente disponíveis na sessão Codex instalada."
+    },
+    {
+      "name": "bridge_codex_threads",
+      "description": "Listar conversas persistentes do Codex App Server."
+    },
+    {
+      "name": "bridge_codex_thread_read",
+      "description": "Ler metadados de uma conversa persistida do Codex App Server."
+    },
+    {
+      "name": "bridge_codex_turns",
+      "description": "Listar histórico paginado de turnos de uma thread Codex sem precisar retomá-la."
+    },
+    {
+      "name": "bridge_codex_skills",
+      "description": "Listar skills disponíveis ao Codex no workspace permitido."
+    },
+    {
+      "name": "bridge_compact_context",
+      "description": "Resumir texto longo em contexto reutilizável com foco em fatos e decisões; usa API e também consome tokens."
+    },
+    {
+      "name": "bridge_memory_put",
+      "description": "Salvar memória EXPLICITAMENTE solicitada em arquivo privado local."
+    },
+    {
+      "name": "bridge_memory_get",
+      "description": "Consultar memória salva por chave."
+    },
+    {
+      "name": "bridge_memory_search",
+      "description": "Pesquisar memória local em áreas, palavras e tags."
+    },
+    {
+      "name": "bridge_memory_delete",
+      "description": "Apagar memória local; exige confirmação explícita."
+    },
+    {
+      "name": "bridge_context_pack",
+      "description": "Montar pacote compacto de memórias com limite estimado de tokens."
+    },
+    {
+      "name": "bridge_workspace_list",
+      "description": "Listar apenas arquivos dentro da pasta workspace autorizada."
+    },
+    {
+      "name": "bridge_workspace_read",
+      "description": "Ler arquivo de texto limitado ao workspace autorizado."
+    },
+    {
+      "name": "bridge_workspace_search",
+      "description": "Procurar texto em arquivos do workspace, com limites de profundidade/tamanho."
+    },
+    {
+      "name": "bridge_workspace_write",
+      "description": "Gravar arquivo texto somente no workspace; DISABLED por padrão, exige confirmação e permissão."
+    },
+    {
+      "name": "bridge_task_create",
+      "description": "Adicionar pedido à caixa local de tarefas. Não executa automaticamente."
+    },
+    {
+      "name": "bridge_task_list",
+      "description": "Ver tarefas da caixa local, útil na ponte inversa compartilhada."
+    },
+    {
+      "name": "bridge_task_update",
+      "description": "Atualizar status de tarefa; exige confirmação explícita."
+    },
+    {
+      "name": "bridge_mcp_servers",
+      "description": "Listar servidores MCP externos configurados localmente."
+    },
+    {
+      "name": "bridge_mcp_tools",
+      "description": "Descobrir ferramentas de servidor MCP remoto permitido no registro local."
+    },
+    {
+      "name": "bridge_mcp_call",
+      "description": "Usar ferramenta de um servidor MCP externo configurado, com confirmação por chamada. Atenção: pode executar ações remotas."
+    },
+    {
+      "name": "bridge_usage",
+      "description": "Uso de API observado pela ponte, sem inventar custo nem contar sessões externas."
+    }
+  ],
+  "prompts": [],
+  "tools_generated": false,
+  "prompts_generated": true
+}

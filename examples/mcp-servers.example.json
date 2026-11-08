@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "meu_mcp": {
+      "url": "https://seu-servidor.example/mcp",
+      "token_env": "MY_MCP_TOKEN"
+    }
+  }
+}

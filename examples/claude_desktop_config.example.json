@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "ai-universal-bridge": {
+      "command": "node",
+      "args": [
+        "/CAMINHO/AIUniversalBridge/server/index.mjs"
+      ],
+      "env": {
+        "AI_BRIDGE_OPENAI_KEY": "ENV_NO_SISTEMA",
+        "AI_BRIDGE_WORKSPACE": "/CAMINHO/PASTA"
+      }
+    }
+  }
+}

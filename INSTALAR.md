@@ -13,3 +13,8 @@ Esta versão troca o transporte MCP próprio pelo SDK oficial e inclui descobert
 ## Não usar
 
 Não copie chaves de API para o exemplo JSON distribuído. Não exponha o servidor HTTP diretamente na internet. Consulte `SECURITY.md` antes de habilitar gravações, Codex em escrita ou ações em MCPs remotos.
+
+
+## Erro em Cowork ou Code
+
+Se os logs disserem `Couldn't start for Cowork and Code sessions` ou `context: shared-pool`, esse erro vem do caminho de conexão do Claude Desktop para essas sessões. O teste local do protocolo não valida essa função. Teste `bridge_status` numa conversa comum do Claude Desktop; o suporte a Cowork/Code não está confirmado nesta versão.

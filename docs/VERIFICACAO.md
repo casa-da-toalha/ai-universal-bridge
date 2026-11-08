@@ -14,7 +14,7 @@
 - O Codex subprocesso agora recebe o ambiente normal de execução sem variáveis cujos nomes indicam chave de API, token, segredo, senha ou credencial.
 - Atualizadas as instruções de instalação para o fluxo atual de extensões no Claude Desktop.
 - Substituído o transporte MCP escrito à mão pelo SDK oficial TypeScript MCP v2.4.0. O servidor agora responde a `server/discover` da revisão 2026-07-28 e mantém compatibilidade com clientes do protocolo 2025.
-- A correção mira o erro observado no Claude Desktop em “Cowork/Code”: falha de negociação de versão durante a descoberta. O teste local reproduz a descoberta moderna e também o handshake legado.
+- O teste local confirma a descoberta MCP moderna e o handshake legado do servidor. Ele não reproduz o caminho interno de conexão “shared-pool” do Cowork/Code do Claude Desktop; portanto, não comprova que esse erro específico do aplicativo foi corrigido.
 
 ## Testes executados
 
@@ -29,7 +29,8 @@ Os testes não acessam uma conta OpenAI, Anthropic, Codex ou Claude Desktop real
 - O `.mcpb` segue o formato MCPB manifest `0.3` e declara Claude Desktop `>=0.10.0`, macOS (`darwin`) e Node `>=18`.
 - O MCPB 1.2.4 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
 - O MCPB extraído foi iniciado pelo Node e respondeu a `server/discover` 2026-07-28. A instalação real e o funcionamento no Claude Desktop do usuário ainda precisam ser confirmados após instalar a nova versão.
-- A verificação local não reproduz o host Cowork/Code do Claude Desktop. O teste confirma que o servidor fala o protocolo moderno e o legado; a validação final depende do app real.
+- Os logs enviados mostram que o processo MCP inicia e recebe `initialize`, mas o Claude Desktop falha ao abrir o servidor para sessões Cowork/Code (`context: shared-pool`). Esse erro também aparece em um relato aberto no repositório MCP da Anthropic. É uma falha no caminho de descoberta compartilhada do aplicativo; o teste do servidor não reproduz nem resolve essa parte.
+- Para confirmar o uso no chat normal do Claude Desktop, teste `bridge_status` numa conversa comum. Não conte com Cowork/Code até essa conexão ser corrigida ou validada no app.
 - GPT exige chave da OpenAI API com acesso ao modelo selecionado; assinatura ChatGPT não substitui a API. Claude API exige credencial Anthropic separada.
 - Codex exige CLI instalado e autenticado. Chamadas a modelos, web search, Code Interpreter e outras APIs podem ter custos e disponibilidade condicionados à conta.
 

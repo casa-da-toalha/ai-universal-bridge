@@ -1,0 +1,40 @@
+name: Build and attach release assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the released source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run automated tests
+        run: npm test
+
+      - name: Package MCPB and source archive
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node -e 'const p=require("./package.json"); const m=require("./manifest.json"); if(p.version!==process.argv[1]||m.version!==process.argv[1]) { console.error("Release tag does not match package/manifest version"); process.exit(1); }' "$VERSION"
+          mkdir -p dist
+          npx --yes @anthropic-ai/mcpb@2.1.2 pack . "dist/AI-Universal-Bridge-$VERSION.mcpb"
+          zip -qr "dist/AI-Universal-Bridge-$VERSION-source.zip" . -x "./.git/*" "./node_modules/*" "./dist/*"
+          (cd dist && sha256sum "AI-Universal-Bridge-$VERSION.mcpb" "AI-Universal-Bridge-$VERSION-source.zip" > SHA256SUMS.txt)
+
+      - name: Upload files to this GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${GITHUB_REF_NAME}" dist/AI-Universal-Bridge-*.mcpb dist/AI-Universal-Bridge-*-source.zip dist/SHA256SUMS.txt --clobber

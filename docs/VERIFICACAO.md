@@ -13,18 +13,23 @@
 - Definido `gpt-6-luna` como modelo padrão econômico; `gpt-6-astra` permanece como modelo avançado. O usuário pode escolher modelos habilitados para a sua chave via configuração.
 - O Codex subprocesso agora recebe o ambiente normal de execução sem variáveis cujos nomes indicam chave de API, token, segredo, senha ou credencial.
 - Atualizadas as instruções de instalação para o fluxo atual de extensões no Claude Desktop.
+- Substituído o transporte MCP escrito à mão pelo SDK oficial TypeScript MCP v2.4.0. O servidor agora responde a `server/discover` da revisão 2026-07-28 e mantém compatibilidade com clientes do protocolo 2025.
+- A correção mira o erro observado no Claude Desktop em “Cowork/Code”: falha de negociação de versão durante a descoberta. O teste local reproduz a descoberta moderna e também o handshake legado.
 
 ## Testes executados
 
-`npm test` passou com 11 testes automatizados em Node.js. `npx @anthropic-ai/mcpb validate manifest.json` passou com o validador oficial MCPB 2.1.2; `mcpb pack` gerou o instalador e `mcpb info` reconheceu versão, manifesto e arquivos esperados. Eles cobrem handshake/listagem MCP, memória, escopo do workspace e gravação condicionada, fila de tarefas, corpos de chamadas de API simuladas, remoção de chaves de mensagens de erro, Codex App Server simulado, isolamento de credenciais para o subprocesso Codex, bloqueio padrão de ações MCP externas, limite de chamadas API e autenticação HTTP remota.
+`npm test` passou com 13 testes automatizados em Node.js. Inclui uma execução real do processo stdio com `server/discover` 2026-07-28, listagem e chamada de ferramenta, além de handshake legado. Os demais testes cobrem memória, escopo do workspace e gravação condicionada, fila de tarefas, corpos de chamadas de API simuladas, remoção de chaves de mensagens de erro, Codex App Server simulado, isolamento de credenciais para o subprocesso Codex, bloqueio padrão de ações MCP externas, limite de chamadas API e autenticação HTTP remota.
+
+`npm audit --omit=dev` encontrou zero vulnerabilidades nas dependências de execução consultadas.
 
 Os testes não acessam uma conta OpenAI, Anthropic, Codex ou Claude Desktop real. Eles não confirmam faturamento, disponibilidade de modelos na conta, interoperabilidade do Codex instalado, instalação do MCPB no macOS ou login no aplicativo Claude.
 
 ## Compatibilidade e validação pendente
 
 - O `.mcpb` segue o formato MCPB manifest `0.3` e declara Claude Desktop `>=0.10.0`, macOS (`darwin`) e Node `>=18`.
-- O arquivo foi criado como ZIP com o manifesto na raiz, e seus caminhos foram comparados com os arquivos do código-fonte. O pacote foi gerado pelo CLI oficial MCPB 2.1.2 e conferido com `mcpb info`; não foi possível confirmar a aceitação pelo instalador de um Claude Desktop real.
-- A instalação e um teste funcional no Mac do usuário ainda precisam ser feitos localmente.
+- O MCPB 1.2.2 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
+- O MCPB extraído foi iniciado pelo Node e respondeu a `server/discover` 2026-07-28. A instalação real e o funcionamento no Claude Desktop do usuário ainda precisam ser confirmados após instalar a nova versão.
+- A verificação local não reproduz o host Cowork/Code do Claude Desktop. O teste confirma que o servidor fala o protocolo moderno e o legado; a validação final depende do app real.
 - GPT exige chave da OpenAI API com acesso ao modelo selecionado; assinatura ChatGPT não substitui a API. Claude API exige credencial Anthropic separada.
 - Codex exige CLI instalado e autenticado. Chamadas a modelos, web search, Code Interpreter e outras APIs podem ter custos e disponibilidade condicionados à conta.
 

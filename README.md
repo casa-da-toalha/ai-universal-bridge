@@ -2,8 +2,8 @@
 
 Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex App Server e a servidores MCP configurados pelo usuário.
 
-**Versão verificada:** 1.2.2  
-**Estado:** testes automatizados locais aprovados; instalação ainda não validada no Claude Desktop real.
+**Versão:** 1.2.2  
+**Estado:** testes locais de protocolo moderno e legado aprovados; validação no Claude Desktop real ainda pendente.
 
 ## Capacidades implementadas
 
@@ -11,7 +11,7 @@ Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex
 - Controle do `codex app-server` instalado localmente: consultar modelos, listar e retomar threads, ler turnos e delegar tarefas.
 - Chamadas opcionais à Anthropic Messages API, comparação de respostas e fluxos sequenciais entre provedores.
 - Memória local persistente, compactação de contexto, fila manual de tarefas e leitura/pesquisa de arquivos numa pasta escolhida.
-- Transporte MCP local por `stdio`; servidor HTTP opcional e cliente para servidores MCP configurados.
+- Transporte MCP local pelo SDK oficial TypeScript v2.4.0, com descoberta 2026-07-28 e compatibilidade com clientes legados; servidor HTTP opcional e cliente para servidores MCP configurados.
 - Limites de chamadas, cache opcional e confirmações para operações que gravam arquivos ou chamam ferramentas externas.
 
 ## Limites que devem ser entendidos
@@ -31,7 +31,7 @@ Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex
 3. Se o Claude Desktop não abrir o instalador ao clicar no arquivo, use **Install Extension…** e selecione o arquivo manualmente.
 4. Selecione uma pasta de workspace dedicada. Configure a chave da OpenAI API somente se quiser chamar GPT. A chave Anthropic é opcional.
 5. Deixe escrita no workspace, escrita pelo Codex e ações MCP remotas desativadas no primeiro uso.
-6. No Claude Desktop, experimente `bridge_status`, depois `bridge_workspace_list`. Se tiver o Codex CLI instalado e autenticado, tente `bridge_codex_models`. Chame `bridge_ask_gpt` somente depois de configurar uma chave de API.
+6. No Claude Desktop, experimente `bridge_status`, depois `bridge_workspace_list`. Se tiver o Codex CLI instalado e autenticado, tente `bridge_codex_models`. Chame `bridge_ask_gpt` somente depois de configurar uma chave de API. Para Cowork/Code, confirme se a lista de ferramentas agora aparece após a descoberta MCP.
 
 Os nomes dos menus podem variar conforme a versão do Claude Desktop. Consulte o guia oficial Anthropic de instalação de servidores MCP locais: <https://support.anthropic.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop>.
 

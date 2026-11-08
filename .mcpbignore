@@ -1,8 +1,6 @@
 tests/
 docs/
-.github/
 .git/
-node_modules/
 *.log
 .env
 .env.*

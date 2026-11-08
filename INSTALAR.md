@@ -8,7 +8,7 @@ Para o aplicativo **Claude Desktop** no macOS:
 4. Deixe as três opções de escrita/ação desativadas no início: workspace, Codex e servidores MCP externos.
 5. Teste `bridge_status` e `bridge_workspace_list`. Teste `bridge_codex_models` somente se o Codex CLI estiver instalado e autenticado. `bridge_ask_gpt` exige chave OpenAI API válida.
 
-Se a extensão não iniciar, veja o painel da extensão no Claude Desktop e confirme a compatibilidade com sua versão. O pacote foi inspecionado e os testes simulados passam, mas ainda não foi instalado em um Claude Desktop real.
+Esta versão troca o transporte MCP próprio pelo SDK oficial e inclui descoberta moderna de protocolo. Depois de instalar, feche e reabra o Claude Desktop e teste `bridge_status` numa conversa normal. A compatibilidade local foi testada; a instalação e o uso no Claude Desktop do seu Mac ainda precisam de confirmação.
 
 ## Não usar
 

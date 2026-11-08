@@ -53,7 +53,7 @@ export async function codexSession(action,{task='',thread_id='',cwd='.',mode='re
   }
  });
  try{
-  await rpc('initialize',{clientInfo:{name:'ai-universal-bridge',title:'AI Universal Bridge',version:'1.2.2'}});
+  await rpc('initialize',{clientInfo:{name:'ai-universal-bridge',title:'AI Universal Bridge',version:'1.2.3'}});
   send({method:'initialized',params:{}});
   if(action==='models'){
    const r=await rpc('model/list',{limit:Math.min(50,limit),includeHidden:false});final={models:r.data||r,nextCursor:r.nextCursor||null};finish();return await completion;

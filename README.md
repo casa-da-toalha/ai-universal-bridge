@@ -2,7 +2,7 @@
 
 Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex App Server e a servidores MCP configurados pelo usuário.
 
-**Versão:** 1.2.2  
+**Versão:** 1.2.3  
 **Estado:** testes locais de protocolo moderno e legado aprovados; validação no Claude Desktop real ainda pendente.
 
 ## Capacidades implementadas
@@ -26,7 +26,7 @@ Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex
 
 ## Instalação no Claude Desktop para macOS
 
-1. Baixe `AI-Universal-Bridge-1.2.2.mcpb` na página **Releases** deste repositório privado.
+1. Baixe `AI-Universal-Bridge-1.2.3.mcpb` na página **Releases** deste repositório privado.
 2. Abra o Claude Desktop e vá para **Settings → Extensions → Advanced settings → Install Extension…**. Escolha o arquivo `.mcpb` baixado e siga a configuração.
 3. Se o Claude Desktop não abrir o instalador ao clicar no arquivo, use **Install Extension…** e selecione o arquivo manualmente.
 4. Selecione uma pasta de workspace dedicada. Configure a chave da OpenAI API somente se quiser chamar GPT. A chave Anthropic é opcional.

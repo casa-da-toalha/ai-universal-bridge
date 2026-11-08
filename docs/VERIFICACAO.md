@@ -1,4 +1,4 @@
-# Verificação da versão 1.2.3
+# Verificação da versão 1.2.4
 
 ## O que foi inspecionado
 
@@ -9,7 +9,7 @@
 
 ## Correções nesta release
 
-- Unificadas as versões em 1.2.3 e os modelos padrão Claude em `claude-sonnet-4-6`.
+- Unificadas as versões em 1.2.4 e os modelos padrão Claude em `claude-sonnet-4-6`.
 - Definido `gpt-6-luna` como modelo padrão econômico; `gpt-6-astra` permanece como modelo avançado. O usuário pode escolher modelos habilitados para a sua chave via configuração.
 - O Codex subprocesso agora recebe o ambiente normal de execução sem variáveis cujos nomes indicam chave de API, token, segredo, senha ou credencial.
 - Atualizadas as instruções de instalação para o fluxo atual de extensões no Claude Desktop.
@@ -27,7 +27,7 @@ Os testes não acessam uma conta OpenAI, Anthropic, Codex ou Claude Desktop real
 ## Compatibilidade e validação pendente
 
 - O `.mcpb` segue o formato MCPB manifest `0.3` e declara Claude Desktop `>=0.10.0`, macOS (`darwin`) e Node `>=18`.
-- O MCPB 1.2.3 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
+- O MCPB 1.2.4 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
 - O MCPB extraído foi iniciado pelo Node e respondeu a `server/discover` 2026-07-28. A instalação real e o funcionamento no Claude Desktop do usuário ainda precisam ser confirmados após instalar a nova versão.
 - A verificação local não reproduz o host Cowork/Code do Claude Desktop. O teste confirma que o servidor fala o protocolo moderno e o legado; a validação final depende do app real.
 - GPT exige chave da OpenAI API com acesso ao modelo selecionado; assinatura ChatGPT não substitui a API. Claude API exige credencial Anthropic separada.

@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "ai-universal-bridge",
   "display_name": "AI Universal Bridge — Claude + GPT + Codex",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Ponte MCP para Claude Desktop: delegar ao GPT, Codex App Server e Claude API, memória, arquivos e servidores MCP remotos.",
   "long_description": "Integração modular para Claude Desktop e MCP remoto opcional. Inclui ferramentas de análise, pesquisa, Codex com threads e aprovações conservadoras, comparação de modelos, memória local, trabalho em arquivos restritos e auditoria de uso. Não acessa automaticamente a interface pessoal de ChatGPT/Claude. As APIs podem cobrar separadamente.",
   "author": {

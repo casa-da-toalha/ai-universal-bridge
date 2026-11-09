@@ -18,6 +18,10 @@ export async function codexSession(action,{task='',thread_id='',cwd='.',mode='re
  let seq=0; const pending=new Map();let ended=false;let final=null;const textParts=[];const events=[];
  let resolveFinal,rejectFinal;
  const completion=new Promise((r,j)=>{resolveFinal=r;rejectFinal=j});
+ // Sem este catch, uma rejeicao de 'completion' que nenhum caminho aguarda
+ // (Codex ausente, saida precoce ou timeout antes do turn/start) derruba o
+ // processo inteiro do servidor MCP por unhandled rejection no Node >=15.
+ completion.catch(()=>{});
  const timer=setTimeout(()=>{rejectFinal(Error('Codex excedeu o tempo configurado'));proc.kill();},Math.max(10,Math.min(900,timeout_seconds))*1000);
  const send=msg=>{if(!proc.killed&&proc.stdin.writable)proc.stdin.write(JSON.stringify(msg)+'\n');};
  const rpc=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});send({id,method,params});});
@@ -53,7 +57,7 @@ export async function codexSession(action,{task='',thread_id='',cwd='.',mode='re
   }
  });
  try{
-  await rpc('initialize',{clientInfo:{name:'ai-universal-bridge',title:'AI Universal Bridge',version:'1.2.4'}});
+  await rpc('initialize',{clientInfo:{name:'ai-universal-bridge',title:'AI Universal Bridge',version:'1.2.5'}});
   send({method:'initialized',params:{}});
   if(action==='models'){
    const r=await rpc('model/list',{limit:Math.min(50,limit),includeHidden:false});final={models:r.data||r,nextCursor:r.nextCursor||null};finish();return await completion;

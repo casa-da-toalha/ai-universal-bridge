@@ -1,7 +1,7 @@
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
-export const VERSION = '1.2.4';
+export const VERSION = '1.2.5';
 export const home = os.homedir();
 export const config = {
   openaiKey: process.env.AI_BRIDGE_OPENAI_KEY || process.env.OPENAI_API_KEY || '',

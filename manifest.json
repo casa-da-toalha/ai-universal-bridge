@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "ai-universal-bridge",
   "display_name": "AI Universal Bridge — Claude + GPT + Codex",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Ponte MCP para Claude Desktop: delegar ao GPT, Codex App Server e Claude API, memória, arquivos e servidores MCP remotos.",
   "long_description": "Integração modular para Claude Desktop e MCP remoto opcional. Inclui ferramentas de análise, pesquisa, Codex com threads e aprovações conservadoras, comparação de modelos, memória local, trabalho em arquivos restritos e auditoria de uso. Não acessa automaticamente a interface pessoal de ChatGPT/Claude. As APIs podem cobrar separadamente.",
   "author": {
@@ -51,7 +51,7 @@
       "linux"
     ],
     "runtimes": {
-      "node": ">=18.0.0"
+      "node": ">=20.0.0"
     }
   },
   "user_config": {
@@ -285,7 +285,40 @@
       "description": "Uso de API observado pela ponte, sem inventar custo nem contar sessões externas."
     }
   ],
-  "prompts": [],
+  "prompts": [
+    {
+      "name": "delegar_gpt",
+      "description": "Pedir ao Claude que delegue um trabalho ao GPT",
+      "arguments": [
+        "tarefa"
+      ],
+      "text": "Delegue via bridge_ask_gpt e entregue o resultado verificado. Tarefa: ${arguments.tarefa}"
+    },
+    {
+      "name": "dupla_verificacao",
+      "description": "Comparar respostas de GPT e Claude API com divergencias",
+      "arguments": [
+        "pergunta"
+      ],
+      "text": "Use bridge_compare_agents e contraste pontos de concordancia/duvida. Pergunta: ${arguments.pergunta}"
+    },
+    {
+      "name": "auditoria_seguranca",
+      "description": "Avaliar riscos e permissoes antes de executar comandos",
+      "arguments": [
+        "tarefa"
+      ],
+      "text": "Antes de alterar qualquer servico, arquivo ou repositorio, identifique permissoes necessarias, riscos e peca confirmacao especifica. Tarefa: ${arguments.tarefa}"
+    },
+    {
+      "name": "economia_tokens",
+      "description": "Transformar informacoes em contexto compacto",
+      "arguments": [
+        "texto"
+      ],
+      "text": "Use bridge_compact_context apenas se compensar custo adicional. Texto: ${arguments.texto}"
+    }
+  ],
   "tools_generated": false,
   "prompts_generated": true
 }

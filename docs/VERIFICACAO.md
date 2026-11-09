@@ -1,4 +1,4 @@
-# Verificação da versão 1.2.4
+# Verificação da versão 1.2.5
 
 ## O que foi inspecionado
 
@@ -9,7 +9,12 @@
 
 ## Correções nesta release
 
-- Unificadas as versões em 1.2.4 e os modelos padrão Claude em `claude-sonnet-4-6`.
+- Corrigido o processo do servidor quando o Codex CLI está ausente, encerra cedo ou excede o tempo: a falha agora responde à ferramenta sem derrubar a sessão MCP.
+- Atualizados os requisitos mínimos de Node.js para 20, exigidos pelo SDK MCP usado.
+- Incluídos no manifesto MCPB os quatro prompts servidos pelo código; o pacote antigo tinha a lista vazia.
+- Ajustado `.mcpbignore` para não incluir o fluxo GitHub Actions no instalador.
+
+- Unificadas as versões em 1.2.5 e os modelos padrão Claude em `claude-sonnet-4-6`.
 - Definido `gpt-6-luna` como modelo padrão econômico; `gpt-6-astra` permanece como modelo avançado. O usuário pode escolher modelos habilitados para a sua chave via configuração.
 - O Codex subprocesso agora recebe o ambiente normal de execução sem variáveis cujos nomes indicam chave de API, token, segredo, senha ou credencial.
 - Atualizadas as instruções de instalação para o fluxo atual de extensões no Claude Desktop.
@@ -18,7 +23,7 @@
 
 ## Testes executados
 
-`npm test` passou com 13 testes automatizados em Node.js. Inclui uma execução real do processo stdio com `server/discover` 2026-07-28, listagem e chamada de ferramenta, além de handshake legado. Os demais testes cobrem memória, escopo do workspace e gravação condicionada, fila de tarefas, corpos de chamadas de API simuladas, remoção de chaves de mensagens de erro, Codex App Server simulado, isolamento de credenciais para o subprocesso Codex, bloqueio padrão de ações MCP externas, limite de chamadas API e autenticação HTTP remota.
+`npm test` passou com 14 testes automatizados em Node.js. Inclui uma execução real do processo stdio com `server/discover` 2026-07-28, listagem e chamada de ferramenta, além de handshake legado. Os demais testes cobrem memória, escopo do workspace e gravação condicionada, fila de tarefas, corpos de chamadas de API simuladas, remoção de chaves de mensagens de erro, Codex App Server simulado, isolamento de credenciais para o subprocesso Codex, bloqueio padrão de ações MCP externas, limite de chamadas API e autenticação HTTP remota.
 
 `npm audit --omit=dev` encontrou zero vulnerabilidades nas dependências de execução consultadas.
 
@@ -26,8 +31,8 @@ Os testes não acessam uma conta OpenAI, Anthropic, Codex ou Claude Desktop real
 
 ## Compatibilidade e validação pendente
 
-- O `.mcpb` segue o formato MCPB manifest `0.3` e declara Claude Desktop `>=0.10.0`, macOS (`darwin`) e Node `>=18`.
-- O MCPB 1.2.4 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
+- O `.mcpb` segue o formato MCPB manifest `0.3` e declara Claude Desktop `>=0.10.0`, macOS (`darwin`) e Node `>=20`.
+- O MCPB 1.2.5 foi validado, empacotado e inspecionado com o CLI oficial MCPB 2.1.2. A extensão inclui o SDK e dependências necessários dentro de `node_modules`.
 - O MCPB extraído foi iniciado pelo Node e respondeu a `server/discover` 2026-07-28. A instalação real e o funcionamento no Claude Desktop do usuário ainda precisam ser confirmados após instalar a nova versão.
 - Os logs enviados mostram que o processo MCP inicia e recebe `initialize`, mas o Claude Desktop falha ao abrir o servidor para sessões Cowork/Code (`context: shared-pool`). Esse erro também aparece em um relato aberto no repositório MCP da Anthropic. É uma falha no caminho de descoberta compartilhada do aplicativo; o teste do servidor não reproduz nem resolve essa parte.
 - Para confirmar o uso no chat normal do Claude Desktop, teste `bridge_status` numa conversa comum. Não conte com Cowork/Code até essa conexão ser corrigida ou validada no app.

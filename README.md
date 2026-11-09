@@ -2,7 +2,7 @@
 
 Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex App Server e a servidores MCP configurados pelo usuário.
 
-**Versão:** 1.2.4  
+**Versão:** 1.2.5  
 **Estado:** testes locais de protocolo moderno e legado aprovados; validação no Claude Desktop real ainda pendente.
 
 ## Capacidades implementadas
@@ -26,18 +26,18 @@ Ponte MCP local para conectar o Claude Desktop a modelos da OpenAI API, ao Codex
 
 ## Instalação no Claude Desktop para macOS
 
-1. Baixe `AI-Universal-Bridge-1.2.4.mcpb` na página **Releases** deste repositório público.
+1. Baixe `AI-Universal-Bridge-1.2.5.mcpb` na página **Releases** deste repositório público.
 2. Abra o Claude Desktop e vá para **Settings → Extensions → Advanced settings → Install Extension…**. Escolha o arquivo `.mcpb` baixado e siga a configuração.
 3. Se o Claude Desktop não abrir o instalador ao clicar no arquivo, use **Install Extension…** e selecione o arquivo manualmente.
 4. Selecione uma pasta de workspace dedicada. Configure a chave da OpenAI API somente se quiser chamar GPT. A chave Anthropic é opcional.
 5. Deixe escrita no workspace, escrita pelo Codex e ações MCP remotas desativadas no primeiro uso.
-6. No Claude Desktop, experimente `bridge_status`, depois `bridge_workspace_list`. Se tiver o Codex CLI instalado e autenticado, tente `bridge_codex_models`. Chame `bridge_ask_gpt` somente depois de configurar uma chave de API. Para Cowork/Code, confirme se a lista de ferramentas agora aparece após a descoberta MCP.
+6. No Claude Desktop, experimente `bridge_status`, depois `bridge_workspace_list`. Se tiver o Codex CLI instalado e autenticado, tente `bridge_codex_models`. Chame `bridge_ask_gpt` somente depois de configurar uma chave de API. Para Cowork/Code, consulte a limitação documentada em `docs/VERIFICACAO.md`; teste primeiro numa conversa comum do Claude Desktop.
 
 Os nomes dos menus podem variar conforme a versão do Claude Desktop. Consulte o guia oficial Anthropic de instalação de servidores MCP locais: <https://support.anthropic.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop>.
 
 ## Configuração manual / desenvolvimento
 
-Requer Node.js 18 ou superior. Clone o repositório público e rode:
+Requer Node.js 20 ou superior. Clone o repositório público e rode:
 
 ```sh
 npm test

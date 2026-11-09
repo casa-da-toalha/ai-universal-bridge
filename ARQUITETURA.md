@@ -1,10 +1,10 @@
-# Arquitetura e próximos módulos — AI Universal Bridge 1.2.4
+# Arquitetura e próximos módulos — AI Universal Bridge 1.2.5
 
 ```
 Claude Desktop (app)
      | MCPB / stdio / JSON-RPC
      v
-AI Universal Bridge 1.2.4
+AI Universal Bridge 1.2.5
      |-- OpenAI Responses API (GPT + web_search + Code Interpreter)
      |-- Codex App Server (threads, models, skills, turns, read-only by default)
      |-- Anthropic Messages API (Claude separado do app)

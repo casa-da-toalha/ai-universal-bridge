@@ -54,7 +54,7 @@ test('stdio supports modern discovery and tool calls', async () => {
       params: {name: 'bridge_status', arguments: {}, _meta: meta}
     });
     assert.equal(status.result.resultType, 'complete');
-    assert.equal(status.result.structuredContent.result.version, '1.2.4');
+    assert.equal(status.result.structuredContent.result.version, '1.2.5');
   } finally {
     await server.close();
   }
